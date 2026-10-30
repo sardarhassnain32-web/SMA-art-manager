@@ -1,0 +1,1 @@
+# SMA-art-manager
