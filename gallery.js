@@ -1,12 +1,51 @@
+
 (() => {
-  const grid=document.getElementById('galleryGrid'), search=document.getElementById('search'), category=document.getElementById('category'), total=document.getElementById('total');
-  const modal=document.getElementById('modal'), modalContent=document.getElementById('modalContent');
-  let items=[];
-  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function filtered(){const q=search.value.trim().toLowerCase(),c=category.value;return items.filter(x=>(!c||x.category===c)&&(`${x.title} ${x.description} ${x.category}`).toLowerCase().includes(q));}
-  function render(){const list=filtered();total.textContent=`${list.length} CREATION${list.length===1?'':'S'}`;grid.innerHTML=list.length?list.map(x=>{const img=(x.image_urls||[])[0];return `<article class="art-card" data-id="${esc(x.id)}"><img src="${esc(img||'') }" alt="${esc(x.title)}" loading="lazy" onerror="this.style.visibility='hidden'"><div class="art-info"><p class="category">${esc(x.category)}</p><h3>${esc(x.title)}</h3><p>${esc(x.description||'')}</p></div></article>`}).join(''):'<p class="empty">No artwork found yet.<br>New SMA creations will appear here.</p>';grid.querySelectorAll('.art-card').forEach(el=>el.addEventListener('click',()=>openItem(el.dataset.id)));}
-  function openItem(id){const x=items.find(a=>a.id===id);if(!x)return;const photos=x.image_urls||[];modalContent.innerHTML=`<div class="modal-box"><img id="mainPhoto" src="${esc(photos[0]||'')}" alt="${esc(x.title)}"><div class="thumbs">${photos.map(p=>`<img src="${esc(p)}" alt="Artwork photo">`).join('')}</div><p class="category">${esc(x.category)}</p><h2>${esc(x.title)}</h2><p>${esc(x.description||'')}</p></div>`;modal.classList.remove('hidden');modalContent.querySelectorAll('.thumbs img').forEach(im=>im.onclick=()=>modalContent.querySelector('#mainPhoto').src=im.src);}
-  document.getElementById('closeModal').onclick=()=>modal.classList.add('hidden');modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.add('hidden')});document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.add('hidden')});search.addEventListener('input',render);category.addEventListener('change',render);
-  async function init(){const cfg=window.SMA_CONFIG||{};if(!window.supabase||!cfg.SUPABASE_URL||cfg.SUPABASE_URL.includes('PASTE_')||!cfg.SUPABASE_ANON_KEY||cfg.SUPABASE_ANON_KEY.includes('PASTE_')){grid.innerHTML='<p class="empty">SMA Gallery is ready for setup.<br>Connect the Supabase project in config.js to display your collection.</p>';total.textContent='';return;}try{const client=window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY);const {data,error}=await client.from('artworks').select('*').order('created_at',{ascending:false});if(error)throw error;items=data||[];render();}catch(e){grid.innerHTML='<p class="empty">Gallery could not load right now. Please check the gallery configuration.</p>';console.error(e);}}
-  init();
+  const grid = document.getElementById('galleryGrid');
+  const search = document.getElementById('search');
+  const category = document.getElementById('category');
+  const total = document.getElementById('total');
+
+  const items = [
+    {
+      id: '1',
+      title: 'SMA Unique Creation 001',
+      category: 'Other Creations',
+      description: 'A unique handcrafted creation by SMA.',
+      image_urls: [
+        'images/27460dbf-2c38-a7a8-3904-1e668623cdd5.jpeg'
+      ]
+    }
+  ];
+
+  function render() {
+    const q = search.value.trim().toLowerCase();
+    const c = category.value;
+
+    const list = items.filter(x =>
+      (!c || x.category === c) &&
+      (`${x.title} ${x.description} ${x.category}`)
+        .toLowerCase().includes(q)
+    );
+
+    total.textContent = `${list.length} CREATION${list.length === 1 ? '' : 'S'}`;
+
+    grid.innerHTML = list.length
+      ? list.map(x => `
+        <article class="art-card">
+          <img src="${x.image_urls[0]}" alt="${x.title}">
+          <div class="art-info">
+            <p class="category">${x.category}</p>
+            <h3>${x.title}</h3>
+            <p>${x.description}</p>
+          </div>
+        </article>
+      `).join('')
+      : '<p class="empty">No artwork found.</p>';
+  }
+
+  search.addEventListener('input', render);
+  category.addEventListener('change', render);
+
+  render();
 })();
+
