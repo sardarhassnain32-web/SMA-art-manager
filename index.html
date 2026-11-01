@@ -1,9 +1,82 @@
+
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><title>SMA Art Gallery</title><link rel="stylesheet" href="style.css"></head>
-<body><header class="hero"><div class="crown">♛</div><div class="brand">SMA</div><p class="tagline">A WORLD OF UNIQUE CREATIONS</p><p class="sub">UNIQUE METAL SCULPTURES</p></header>
-<nav class="nav"><a href="#gallery">GALLERY</a><a href="#about">ABOUT SMA</a><a href="admin.html">ADMIN</a></nav>
-<main><section class="intro" id="about"><p class="eyebrow">HANDCRAFTED ART & OBJECTS</p><h1>Every creation has a story.</h1><p>Discover unique pieces shaped by imagination, patience and craftsmanship.</p></section>
-<section id="gallery"><div class="section-head"><div><p class="eyebrow">THE COLLECTION</p><h2>Art Gallery</h2></div><span id="total" class="muted"></span></div><div class="filters"><input id="search" type="search" placeholder="Search artwork..."><select id="category"><option value="">All categories</option><option>Metal Art</option><option>Wood Art</option><option>Vintage Art</option><option>Other Creations</option></select></div><div id="galleryGrid" class="gallery"><p class="empty">Loading SMA creations...</p></div></section></main>
-<footer><div class="brand smallbrand">SMA</div><p>A WORLD OF UNIQUE CREATIONS</p><small>UNIQUE METAL SCULPTURES · HANDCRAFTED WITH PURPOSE</small></footer>
-<div id="modal" class="modal hidden" role="dialog" aria-modal="true"><button id="closeModal" class="close" aria-label="Close">×</button><div id="modalContent"></div></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="gallery.js"></script></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>SMA Art Gallery</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+<div class="crown">♛</div>
+<div class="brand">SMA</div>
+<p class="tagline">A WORLD OF UNIQUE CREATIONS</p>
+<p class="sub">UNIQUE METAL SCULPTURES</p>
+</header>
+
+<nav class="nav">
+<a href="#gallery">GALLERY</a>
+<a href="#about">ABOUT SMA</a>
+<a href="#contact">CONTACT SMA</a>
+</nav>
+
+<main>
+<section class="intro" id="about">
+<p class="eyebrow">HANDCRAFTED ART & OBJECTS</p>
+<h1>Every creation has a story.</h1>
+<p>Discover unique pieces shaped by imagination, patience and craftsmanship.</p>
+</section>
+
+<section id="gallery">
+<div class="section-head">
+<div><p class="eyebrow">THE COLLECTION</p><h2>Art Gallery</h2></div>
+<span id="total" class="muted"></span>
+</div>
+<div class="filters">
+<input id="search" type="search" placeholder="Search artwork...">
+<select id="category">
+<option value="">All categories</option>
+<option>Metal Art</option>
+<option>Wood Art</option>
+<option>Vintage Art</option>
+<option>Other Creations</option>
+</select>
+</div>
+<div id="galleryGrid" class="gallery">
+<p class="empty">Loading SMA creations...</p>
+</div>
+</section>
+
+<section class="intro" id="contact">
+<p class="eyebrow">GET IN TOUCH</p>
+<h2>CONTACT SMA</h2>
+<p>Have a question or interested in a unique creation? Send us a message.</p>
+<form id="contactForm">
+<input name="name" placeholder="Your Name" maxlength="80" required>
+<input name="email" type="email" placeholder="Your Email" maxlength="150" required>
+<textarea name="message" placeholder="Write your message..." maxlength="2000" required></textarea>
+<button type="submit">SEND MESSAGE</button>
+<p id="contactStatus"></p>
+</form>
+</section>
+</main>
+
+<footer>
+<div class="brand smallbrand">SMA</div>
+<p>A WORLD OF UNIQUE CREATIONS</p>
+<small>UNIQUE METAL SCULPTURES · HANDCRAFTED WITH PURPOSE</small>
+</footer>
+
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+<button id="closeModal" class="close" aria-label="Close">×</button>
+<div id="modalContent"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="gallery.js"></script>
+<script src="contact.js"></script>
+</body>
+</html>
